@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script src="jquery-3.6.0.min.js"></script>
+    <script src="jquery.datepicker.js"></script>
+    <script src="datepicker.ru-RU.js"></script>
+    <link rel="stylesheet" href="jquery.datepicker.css" />
+    <style>
+        input {
+            position: absolute;
+        }
+        #datepick1 {
+            left: 25px;
+            top: 25px
+        }
+        #datepick2 {
+            right: 25px;
+            top: 25px
+        }
+        #datepick3 {
+            left: 25px;
+            bottom: 25px
+        }
+        #datepick4 {
+            right: 25px;
+            bottom: 25px
+        }
+    </style>
+</head>
+<body>
+    <input id="datepick1">
+    <!-- <input id="datepick2"> -->
+    <!-- <input id="datepick3"> -->
+    <input id="datepick4">
+    <script>
+        const datepickerSetting = { 
+            placeholder: "Дата начала",
+            weekStart: 1,
+            lang: 'ru-RU',
+            type: "datetime",
+            format: "dd.MM.yyyy HH:mm",
+            align: "custom"
+        };
+                                    
+        $("#datepick1").datepicker(datepickerSetting);
+        $("#datepick2").datepicker(datepickerSetting);
+        $("#datepick3").datepicker(datepickerSetting);
+        $("#datepick4").datepicker(datepickerSetting);
+    </script>
+</body>
+</html>
