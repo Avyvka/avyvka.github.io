@@ -512,6 +512,10 @@
                     core._setTimeView($self, e);
                 });
 
+                // datepicker.$pickerPanel.on('touchstart', '.gmi-time-panel__body__item', function (e) {
+                //     e.currentTarget.style.overflow = "auto";
+                // });
+
                 if (datepicker.$timePanel && datepicker.$timePanel.length > 0) {
                     datepicker.$timePanel.on('click.datepicker', '.gmi-time-panel__body__item--spinner__item:not(.disabled)', function (e) {
                         var $timeItem = $(this);
@@ -520,6 +524,8 @@
                         var num = Number($timeItem.text());
                         var itemHeight = $timeItem.outerHeight();
                         // var scrollTop = num * itemHeight;
+
+                        
 
                         const { offsetTop, offsetHeight: elementHeight } = this;
                         const wrapperHeight = $timeItemWrapper.outerHeight();
@@ -810,12 +816,14 @@
                     '</li>' +
                     '<li class="gmi-picker-panel__body__header--time__wrapper">' +
                     '<div data-role="date" class="gmi-input gmi-time-picker--wrapper">' +
+                    '<div class="gmi-picker-panel__body__header fake"></div>' +
+                    '<table cellspacing="0" cellpadding="0" class="gmi-date-table" style="">' +
+                    '<tbody><tr><th>Чч</th><th>Мм</th></tr></tbody></table>' +
                     '<input data-role="date" type="text" class="gmi-input__inner gmi-time-picker--input" placeholder="' + datepicker.dateTimeInputPlaceholder + '">'
                     + core._generateTimePickerDOM('date') +
                     '</div>' +
                     '</li>' +
                     '</ul></div>';
-
                 return datetimeHeaderStr;
             },
             _generateDatetimeFooter: function (type) {
@@ -1294,7 +1302,7 @@
                 $yearLabel.text(year + ' ' + datepicker.yearSuffix + '');
                 $monthLabel.show().text(datepicker.monthsShort[month]);
 
-                const $oldDateTable = $delegateTarget.find('.gmi-date-table');
+                const $oldDateTable = $delegateTarget.find('.gmi-picker-panel__body__left .gmi-date-table');
                 $oldDateTable.siblings('table').hide();
                 $oldDateTable.remove();
 
