@@ -21,8 +21,12 @@
         min-width: 245px !important;
     }
     .gmi-time-panel__body__item--spinner {
-        max-height: 262px !important;
+        max-height: 180px !important;
     }
+    /* .gmi-time-panel__body__item--spinner:after,
+    .gmi-time-panel__body__item--spinner:before {
+        height: 75px !important;
+    }  */
 }
 
 @media (max-width: 320px) {
@@ -103,6 +107,14 @@
     padding: 12px 7px 5px;
 }
 
+.gmi-picker-panel__body__header.fake {
+    display: block !important;
+}
+
+.gmi-picker-panel__body__header.fake::after {
+    content: "\a0";
+}
+
 .gmi-picker-panel__body__header span[class^=gmi-date-picker__header__label--] {
     color: var(--text-color-) !important;
 }
@@ -140,7 +152,8 @@
 .gmi-picker-panel__body__header--time__wrapper .gmi-input {
     width: 100%;
     height: 100%;
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
 }
 
 .gmi-picker-panel__body__header--time__wrapper .gmi-input__inner {
@@ -242,13 +255,6 @@
     color: var(--primary-color);
 }
 
-.gmi-picker-panel .gmi-date-table td.current,
-.gmi-time-panel__body__item--spinner__item.active {
-    color: var(--primary-color);
-    background-color: var(--primary-container);
-    font-weight: 600;
-}
-
 .gmi-picker-panel .gmi-date-table td.disabled {
     background-color: #f5f5f5;
     opacity: 1;
@@ -261,8 +267,15 @@
 }
 
 .gmi-time-panel__body__item--spinner__item:hover,
-.gmi-picker-panel .gmi-date-table td.available:not(.current):hover {
+.gmi-picker-panel .gmi-date-table td.available:hover {
     background-color: var(--hover-color);
+}
+
+.gmi-picker-panel .gmi-date-table td.current,
+.gmi-time-panel__body__item--spinner__item.active {
+    color: var(--primary-color);
+    background-color: var(--primary-container);
+    font-weight: 600;
 }
 
 .gmi-picker-panel .gmi-date-table td.next-month,
@@ -428,6 +441,7 @@
     height: 100%;
     width: var(--cell-width);
     overflow: hidden;
+    overflow: auto;
 }
 
 .gmi-time-panel__body__item:hover {
@@ -436,9 +450,10 @@
 
 .gmi-time-panel__body__item--spinner {
     width: 100%;
-    max-height: 362px;
+    max-height: 270px;
     list-style: none;
     padding: 0;
+    height: 100%;
 }
 
 .gmi-time-panel__body__item--spinner:after,
@@ -554,7 +569,7 @@
 }
 
 .gmi-picker-panel.custom .gmi-time-panel__body__item:hover .gmi-time-panel__body__item--spinner__item { 
-    padding-left: calc(var(--cell-width) - 100%);
+    /* padding-left: calc(var(--cell-width) - 100%); */
 }
 
 .gmi-picker-panel__body__left {
