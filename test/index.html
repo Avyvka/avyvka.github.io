@@ -1,56 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <script src="jquery-3.6.0.min.js"></script>
-    <script src="jquery.datepicker.js"></script>
-    <script src="datepicker.ru-RU.js"></script>
-    <link rel="stylesheet" href="jquery.datepicker.css" />
-    <style>
-        input {
-            position: absolute;
-        }
-        #datepick1 {
-            left: 25px;
-            top: 25px
-        }
-        #datepick2 {
-            right: 25px;
-            top: 25px
-        }
-        #datepick3 {
-            left: 25px;
-            bottom: 25px
-        }
-        #datepick4 {
-            right: 25px;
-            bottom: 25px
-        }
-    </style>
-</head>
-<body>
-    <input id="datepick1" inputmode="none">
-    <!-- <input id="datepick2"> -->
-    <!-- <input id="datepick3"> -->
-    <input id="datepick4" inputmode="none">
-    <script>
-        const datepickerSetting = { 
-            placeholder: "Дата начала",
-            weekStart: 1,
-            lang: 'ru-RU',
-            type: "datetime",
-            format: "dd.MM.yyyy HH:mm",
-            align: "custom"
-        };
-                                    
-        $("#datepick1").datepicker(datepickerSetting);
-        $("#datepick2").datepicker(datepickerSetting);
-        $("#datepick3").datepicker(datepickerSetting);
-        $("#datepick4").datepicker(datepickerSetting);
-    </script>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://raw.githubusercontent.com/WebReflection/built-in-element/master/min.js"></script>
+        <style>
+            .input {
+                position: relative;
+                width: 100%;
+                border-radius: 0.25em;
+                line-height: 1.5;
+            }
+            .input__control {
+                background: transparent;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                padding: 0.35em 0.75em;
+                padding-right: 2em;
+                outline: none;
+                border: none;
+                width: 100%;
+                border-radius: inherit;
+                color: inherit;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                font-family: inherit;
+                font-size: inherit;
+                line-height: inherit;
+            }
+            .input__control:focus + .input__outline::before,
+            .input__control:focus + .input__outline::after,
+            .input__control:focus + .input__outline > * {
+                border-width: 2px;
+                border-color: #316fd3;
+                color: #316fd3;
+            }
+            .input__control:focus ~ .input__outline .input__label,
+            .input__control.active ~ .input__outline .input__label,
+            .input.active .input__label {
+                transform: translateY(-50%) translateY(-1px);
+                font-size: 0.8em;
+                padding: 0 3px;
+                position: static;
+                opacity: 1;
+            }
+            .input.select .input__control {
+                cursor: pointer;
+            }
+            .input__select:disabled ~ .input__control {
+                background-color: rgba(0, 0, 0, 0.1019607843);
+            }
+            .input__outline {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                pointer-events: none;
+                border-radius: inherit;
+            }
+            .input__outline::before,
+            .input__outline::after,
+            .input__outline-middle {
+                border-width: 1px;
+                border-color: #bdbdbd;
+                border-style: solid;
+                border-radius: inherit;
+                color: rgba(0, 0, 0, 0.6);
+            }
+            .input__outline::before {
+                content: "";
+                height: 100%;
+                left: 0px;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                border-right: 0;
+                width: 0.75em;
+            }
+            .input__outline::after {
+                content: "";
+                height: 100%;
+                right: 0px;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+                border-left: 0;
+                width: 100%;
+            }
+            .input__outline-middle {
+                border-radius: 0;
+                border-right: none;
+                border-left: none;
+                border-top: none;
+            }
+            .input__label {
+                line-height: 1;
+                font-size: 16px;
+                padding-bottom: 2px;
+                position: absolute;
+                transition: font, transform 0.2s ease-in-out;
+                transform-origin: 0 0;
+                transform: translateY(50%);
+                opacity: 0.75;
+                vertical-align: top;
+                display: inline-block;
+            }
+            .input__select {
+                display: none;
+            }
+            .input__select:disabled ~ * {
+                opacity: 0.65;
+                cursor: default;
+                pointer-events: none;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+            .input__dropdown {
+                display: none;
+                position: absolute;
+                width: 100%;
+                box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+                    0 2px 10px 0 rgba(0, 0, 0, 0.12);
+                color: inherit;
+                border-radius: 0.25em;
+                z-index: 1000;
+                background-color: white;
+            }
+            .input.active .input__dropdown {
+                display: block;
+            }
+            .input__arrow-down {
+                position: absolute;
+                right: 0.75em;
+                top: 50%;
+                transform: translateY(-50%);
+                height: 1px;
+                display: flex;
+                pointer-events: none;
+            }
+            .input__arrow-down::before,
+            .input__arrow-down::after {
+                content: "";
+                display: block;
+                width: 7px;
+                height: 100%;
+                background-color: currentColor;
+            }
+            .input__arrow-down::before {
+                transform: rotate(45deg) translateX(2px);
+            }
+            .input__arrow-down::after {
+                transform: rotate(-45deg) translateX(-2px);
+            }
+            .input.active .input__arrow-down::before,
+            .input.active .input__arrow-down::after {
+                background-color: #316fd3;
+            }
+            .input.active .input__arrow-down::before {
+                transform: rotate(-45deg) translateX(2px);
+            }
+            .input.active .input__arrow-down::after {
+                transform: rotate(45deg) translateX(-2px);
+            }
+            .input,
+            .input *,
+            .input *::before,
+            .input *::after {
+                box-sizing: border-box;
+            }
+
+            .select-options {
+                max-height: 180px;
+                overflow-y: auto;
+            }
+            .select-options::-webkit-scrollbar {
+                width: 2px;
+                height: 2px;
+            }
+            .select-options::-webkit-scrollbar-thumb {
+                background-color: #bcbcbc;
+            }
+            .select-options::-webkit-scrollbar-track-piece {
+                background-color: transparent;
+                border-radius: 0;
+                border-bottom-right-radius: 2px;
+                border-bottom-left-radius: 2px;
+            }
+
+            .select-option {
+                height: 36px;
+                padding: 0 0.75em;
+                padding-right: 2.25em;
+                cursor: pointer;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                width: 100%;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                line-height: 36px;
+            }
+            .select-option:hover,
+            .select-option.active {
+                background-color: #e9ecef;
+            }
+            .select-option.selected {
+                background-color: #e3ebf7;
+                color: #316fd3;
+                position: relative;
+            }
+            .select-option.selected::before,
+            .select-option.selected::after {
+                content: "";
+                display: block;
+                height: 2px;
+                background-color: #316fd3;
+                position: absolute;
+                right: 0.75em;
+                top: 50%;
+                pointer-events: none;
+            }
+            .select-option.selected::before {
+                width: 6px;
+                transform: translate(-8px, -50%) translateY(2px) rotateZ(45deg);
+            }
+            .select-option.selected::after {
+                width: 12px;
+                transform: translateY(-50%) rotateZ(-45deg);
+            }
+        </style>
+    </head>
+    <body>
+        <div id="div1"></div>
+        <div id="div2"></div>
+        <script>
+            const initialized = new WeakSet();
+            const setup = (node) => {
+                initialized.add(node);
+                node.live = true;
+            };
+
+            class CustomInputElement extends HTMLInputElement {
+                constructor() {
+                    super();
+                    this.addEventListener("input", () => this.onInput());
+                }
+
+                connectedCallback() {
+                    if (!initialized.has(this)) setup(this);
+
+                    console.log(initialized);
+
+                    if (this.parentNode !== this.wrapper) {
+                        this.render();
+                    }
+                }
+
+                render() {
+                    if (this.wrapper === undefined) {
+                        this.wrapper = document.createElement("div");
+                        this.wrapper.classList.add("input");
+                        this.wrapper.innerHTML = `<div class="input__outline">
+                                <div class="input__outline-middle">
+                                    <label class="input__label">
+                                        ${""}
+                                    </label>
+                                </div>
+                            </div>`;
+                    }
+                    this.parentNode.insertBefore(this.wrapper, this);
+
+                    this.classList.add("input__control");
+                    this.wrapper.prepend(this);
+                }
+
+                onInput() {
+                    if (this.value === "") {
+                        this.classList.remove("active");
+                    } else {
+                        this.classList.add("active");
+                    }
+                }
+            }
+            customElements.define("basis-input", CustomInputElement, {
+                extends: "input",
+            });
+
+            const div1 = document.getElementById("div1");
+            const div2 = document.getElementById("div2");
+            const input = document.createElement("input", {
+                is: "basis-input",
+            });
+            document.body.append(input);
+            div1.append(input);
+        </script>
+    </body>
 </html>
