@@ -13,7 +13,7 @@ if ("Notification" in window) {
     console.error("Browser does not support Notification.");
 }
 
-if ("serviceWorker" in navigator && "PushManager" in window) {
+if ("serviceWorker" in navigator) {
     navigator.serviceWorker
         .register("./service-worker.js")
         .then((serviceWorkerRegistration) => {
