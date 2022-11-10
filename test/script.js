@@ -4,9 +4,14 @@ const log = (content) => {
     document.body.append(span);
 };
 
-Notification.requestPermission().then((permission) => {
-    log(permission);
-});
+if ("Notification" in window) {
+    Notification.requestPermission().then((permission) => {
+        log(permission);
+    });
+} else {
+    log("Browser does not support Notification.");
+    console.error("Browser does not support Notification.");
+}
 
 if ("serviceWorker" in navigator && "PushManager" in window) {
     navigator.serviceWorker
